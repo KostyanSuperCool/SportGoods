@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace SportGoods;
+namespace SportGoods.NewFolder;
 
 public partial class ShopSportingKiselevContext : DbContext
 {

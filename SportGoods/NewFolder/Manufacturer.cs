@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportGoods;
+namespace SportGoods.NewFolder;
 
 public partial class Manufacturer
 {
