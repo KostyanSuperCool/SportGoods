@@ -1,4 +1,4 @@
-using SportGoods.NewFolder;
+using SportGoods.NewFolder1;
 
 namespace SportGoods
 {

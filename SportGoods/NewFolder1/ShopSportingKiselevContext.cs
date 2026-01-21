@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace SportGoods.NewFolder;
+namespace SportGoods.NewFolder1;
 
 public partial class ShopSportingKiselevContext : DbContext
 {
@@ -37,7 +37,7 @@ public partial class ShopSportingKiselevContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ShopSportingKiselev;username=postgres;Password=1111");
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ShopSportingKiselev;Username=postgres;Password=1111");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,7 +79,7 @@ public partial class ShopSportingKiselevContext : DbContext
             entity.Property(e => e.IdStatus).HasColumnName("id_status");
             entity.Property(e => e.IdUser).HasColumnName("id_user");
 
-            entity.HasOne(d => d.IdAddresPickUpPointNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.PickUpPoint).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdAddresPickUpPoint)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_id_addres_pick_up_point_fkey");
@@ -138,14 +138,20 @@ public partial class ShopSportingKiselevContext : DbContext
                 .HasDefaultValueSql("nextval('product_id_seq'::regclass)")
                 .HasColumnName("id");
             entity.Property(e => e.Article).HasColumnName("article");
-            entity.Property(e => e.CountOnStock).HasColumnName("count_on_stock");
+            entity.Property(e => e.CountOnStock)
+                .HasColumnType("money")
+                .HasColumnName("count_on_stock");
             entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Discount).HasColumnName("discount");
+            entity.Property(e => e.Discount)
+                .HasColumnType("money")
+                .HasColumnName("discount");
             entity.Property(e => e.IdCategory).HasColumnName("id_category");
             entity.Property(e => e.IdManufacturer).HasColumnName("id_manufacturer");
             entity.Property(e => e.IdSupplier).HasColumnName("id_supplier");
             entity.Property(e => e.Image).HasColumnName("image");
-            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.Price)
+                .HasColumnType("money")
+                .HasColumnName("price");
             entity.Property(e => e.ProductName).HasColumnName("product_name");
             entity.Property(e => e.UnitOfMeasurement).HasColumnName("unit_of_measurement");
 

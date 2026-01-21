@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportGoods.NewFolder;
+namespace SportGoods.NewFolder1;
 
 public partial class OrderComposition
 {

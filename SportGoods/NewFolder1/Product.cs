@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SportGoods.NewFolder;
+namespace SportGoods.NewFolder1;
 
 public partial class Product
 {
@@ -17,13 +17,13 @@ public partial class Product
 
     public int IdSupplier { get; set; }
 
-    public string Price { get; set; } = null!;
+    public decimal Price { get; set; }
 
     public string UnitOfMeasurement { get; set; } = null!;
 
-    public string Discount { get; set; } = null!;
+    public decimal Discount { get; set; }
 
-    public string CountOnStock { get; set; } = null!;
+    public decimal CountOnStock { get; set; }
 
     public string Description { get; set; } = null!;
 
