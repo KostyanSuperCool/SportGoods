@@ -27,6 +27,8 @@ public partial class Product
 
     public string Description { get; set; } = null!;
 
+    public string? Image { get; set; }
+
     public virtual CategoryProduct IdCategoryNavigation { get; set; } = null!;
 
     public virtual Manufacturer IdManufacturerNavigation { get; set; } = null!;
