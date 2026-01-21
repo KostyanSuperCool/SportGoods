@@ -84,12 +84,12 @@ public partial class ShopSportingKiselevContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_id_addres_pick_up_point_fkey");
 
-            entity.HasOne(d => d.IdStatusNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.Status).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdStatus)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_id_status_fkey");
 
-            entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdUser)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_id_user_fkey");
@@ -106,12 +106,12 @@ public partial class ShopSportingKiselevContext : DbContext
             entity.Property(e => e.IdArticle).HasColumnName("id_article");
             entity.Property(e => e.IdOrder).HasColumnName("id_order");
 
-            entity.HasOne(d => d.IdArticleNavigation).WithMany(p => p.OrderCompositions)
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderCompositions)
                 .HasForeignKey(d => d.IdArticle)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_composition_id_article_fkey");
 
-            entity.HasOne(d => d.IdOrderNavigation).WithMany(p => p.OrderCompositions)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderCompositions)
                 .HasForeignKey(d => d.IdOrder)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_composition_id_order_fkey");
@@ -149,17 +149,17 @@ public partial class ShopSportingKiselevContext : DbContext
             entity.Property(e => e.ProductName).HasColumnName("product_name");
             entity.Property(e => e.UnitOfMeasurement).HasColumnName("unit_of_measurement");
 
-            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.CategoryProduct).WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdCategory)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("product_id_category_fkey");
 
-            entity.HasOne(d => d.IdManufacturerNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Manufacturer).WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdManufacturer)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("product_id_manufacturer_fkey");
 
-            entity.HasOne(d => d.IdSupplierNavigation).WithMany(p => p.Products)
+            entity.HasOne(d => d.Supplier).WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdSupplier)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("product_id_supplier_fkey");
@@ -211,7 +211,7 @@ public partial class ShopSportingKiselevContext : DbContext
             entity.Property(e => e.Password).HasColumnName("password");
             entity.Property(e => e.UserName).HasColumnName("user_name");
 
-            entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdRole)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("user_id_role_fkey");

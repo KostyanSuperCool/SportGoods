@@ -29,11 +29,11 @@ public partial class Product
 
     public string? Image { get; set; }
 
-    public virtual CategoryProduct IdCategoryNavigation { get; set; } = null!;
+    public virtual CategoryProduct CategoryProduct { get; set; } = null!;
 
-    public virtual Manufacturer IdManufacturerNavigation { get; set; } = null!;
+    public virtual Manufacturer Manufacturer { get; set; } = null!;
 
-    public virtual Supplier IdSupplierNavigation { get; set; } = null!;
+    public virtual Supplier Supplier { get; set; } = null!;
 
     public virtual ICollection<OrderComposition> OrderCompositions { get; set; } = new List<OrderComposition>();
 }

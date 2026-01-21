@@ -13,7 +13,7 @@ public partial class OrderComposition
 
     public string Count { get; set; } = null!;
 
-    public virtual Product IdArticleNavigation { get; set; } = null!;
+    public virtual Product Product { get; set; } = null!;
 
-    public virtual Order IdOrderNavigation { get; set; } = null!;
+    public virtual Order Order { get; set; } = null!;
 }
