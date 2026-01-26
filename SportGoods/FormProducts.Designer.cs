@@ -70,14 +70,15 @@
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(150, 30);
             btnLogin.TabIndex = 5;
-            btnLogin.Text = "Войти";
+            btnLogin.Text = "Выход";
             btnLogin.UseVisualStyleBackColor = false;
-            btnLogin.Click += btnLogin_Click;
+            btnLogin.Click += BtnLogin_Click;
             // 
             // dgvProducts
             // 
             dgvProducts.AllowUserToAddRows = false;
             dgvProducts.AllowUserToDeleteRows = false;
+            dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvProducts.BackgroundColor = Color.White;
             dgvProducts.BorderStyle = BorderStyle.None;

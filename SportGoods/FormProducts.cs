@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportGoods.NewFolder1;
 using SportGoods.Properties;
+using System.Windows.Forms;
 
 namespace SportGoods
 {
@@ -17,18 +18,18 @@ namespace SportGoods
             InitializeComponent();
 
             var colPhoto = new DataGridViewImageColumn();
-            colPhoto.Name = "colPhoto";
+            colPhoto.Name = "Фото";
             colPhoto.ImageLayout = DataGridViewImageCellLayout.Zoom;
             colPhoto.Width = 200;
             colPhoto.FillWeight = 30;
 
-            var colInfo = new DataGridViewImageColumn();
-            colInfo.Name = "colInfo";
+            var colInfo = new DataGridViewTextBoxColumn();
+            colInfo.Name = "Информация";
             colInfo.FillWeight = 60;
             colInfo.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-            var colDiscount = new DataGridViewImageColumn();
-            colDiscount.Name = "colDiscount";
+            var colDiscount = new DataGridViewTextBoxColumn();
+            colDiscount.Name = "Скидка";
             colDiscount.FillWeight = 10;
             colDiscount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
@@ -55,7 +56,6 @@ namespace SportGoods
                         .Include(i => i.CategoryProduct)
                         .Include(i => i.Manufacturer)
                         .Include(i => i.Supplier)
-                        .Include(i => i.UnitOfMeasurement)
                         .ToList();
 
                     dgvProducts.SuspendLayout();
@@ -63,18 +63,21 @@ namespace SportGoods
 
                     foreach (var product in products)
                     {
-                        int rowIndex = dgvProducts.Rows.Count;
+                        int rowIndex = dgvProducts.Rows.Add();
                         var row = dgvProducts.Rows[rowIndex];
 
-                        row.Cells["colPhoto"].Value = LoadProductImage(product.Image);
+                        row.Cells["Фото"].Value = LoadProductImage(product.Image);
 
-                        row.Cells["colInfo"].Value = FormatProductInfo(product);
+                        row.Cells["Информация"].Value = FormatProductInfo(product);
 
-                        row.Cells["colDiscount"].Value = $"{product.Discount}";
-                        row.Cells["colDiscount"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        row.Cells["Скидка"].Value = $"{product.Discount}";
+                        row.Cells["Скидка"].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                         ApplyRowStyles(row, product);
                     }
+
+                    dgvProducts.ResumeLayout();
+                    dgvProducts.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
                 }
             }
             catch (Exception ex)
@@ -97,6 +100,15 @@ namespace SportGoods
             {
                 row.DefaultCellStyle.ForeColor = Color.LightBlue;
             }
+
+            if (product.Discount > 0)
+            {
+                row.Cells["Скидка"].Style.ForeColor = Color.Red;
+                row.Cells["Скидка"].Style.Font = new Font(
+                    "Times New Roman",
+                    12,
+                    FontStyle.Bold);
+            }
         }
 
         private string FormatProductInfo(Product product)
@@ -104,9 +116,14 @@ namespace SportGoods
             string priceText;
 
             if (product.Discount > 0)
-            {
+            { 
                 decimal finalPrice = product.Price * (100 - product.Discount) / 100;
-                priceText = $"Цена: {product.Price:C}->{finalPrice}";
+
+                string oldPrice = $"{product.Price:C}";
+                string strikePrice = "";
+                foreach (char c in oldPrice) strikePrice += c + "\u0336";
+                priceText = $"Цена: {strikePrice}->{finalPrice:C}";
+
             }
             else
             {
@@ -117,9 +134,9 @@ namespace SportGoods
                 $"Описание товара: {product.Description}" + Environment.NewLine +
                 $"Производитель: {product.Manufacturer.ManufacturerProduct}" + Environment.NewLine +
                 $"Поставщик: {product.Supplier.SupplierProduct}" + Environment.NewLine +
-                $"Цена: {product.Price}" + Environment.NewLine +
+                priceText + Environment.NewLine +
                 $"Единица измерения: {product.UnitOfMeasurement}" + Environment.NewLine +
-                $"Количетсво на складе: {product.CountOnStock}";
+                $"Количеcnво на складе: {product.CountOnStock}";
         }
 
         private Image LoadProductImage(string photoUrl)
@@ -132,7 +149,7 @@ namespace SportGoods
             return Resources.picture;
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
