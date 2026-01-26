@@ -1,13 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportGoods.NewFolder1;
 using SportGoods.Properties;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace SportGoods
 {
@@ -84,19 +77,25 @@ namespace SportGoods
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void ApplyRowStyles(DataGridViewRow row, Product product)
         {
             if (product.Discount > 15)
             {
-                row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml("");
+                row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                row.DefaultCellStyle.ForeColor = Color.White;
+
+            }
+            if (product.CountOnStock == 0)
+            {
+                row.DefaultCellStyle.ForeColor = Color.LightBlue;
             }
         }
 
@@ -104,7 +103,7 @@ namespace SportGoods
         {
             string priceText;
 
-            if(product.Discount>0)
+            if (product.Discount > 0)
             {
                 decimal finalPrice = product.Price * (100 - product.Discount) / 100;
                 priceText = $"Цена: {product.Price:C}->{finalPrice}";
@@ -125,12 +124,23 @@ namespace SportGoods
 
         private Image LoadProductImage(string photoUrl)
         {
-            if(!String.IsNullOrEmpty(photoUrl) && System.IO.File.Exists(photoUrl))
+            if (!String.IsNullOrEmpty(photoUrl) && System.IO.File.Exists(photoUrl))
             {
                 return Image.FromFile(photoUrl);
             }
 
             return Resources.picture;
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
         }
     }
 }
